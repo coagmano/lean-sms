@@ -9,7 +9,7 @@ var basic = auth.basic({
     realm: "LEAN sms blast",
     file: __dirname + "/users.htpasswd"
 });
-app.use(auth.connect(basic));
+//app.use('/',auth.connect(basic));
 app.use(bodyParser.urlencoded({
   extended: true
 }));
