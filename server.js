@@ -46,5 +46,5 @@ app.post('/send', function(req, res) {
 app.post('/incoming', smsService.smsToEmail);
 
 app.use(express.static(__dirname + '/public'));
-app.listen(3000);
+app.listen(8080);
 
