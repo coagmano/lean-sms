@@ -55,9 +55,12 @@ module.exports.smsToEmail = function(req, res) {
     var mandrill = require('mandrill-api/mandrill');
     var mandrill_client = new mandrill.Mandrill(env.MANDRILL_API_KEY);
 
+    if (req.body.From === undefined || req.body.Body === undefined) {
+        return console.error("POST payload malformed");
+    }
+
     var phone = req.body.From.substring(1,12);
     console.log(req.body);
-    console.log(mailOptions);
 
 
     var message = {
