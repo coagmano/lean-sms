@@ -70,8 +70,8 @@ module.exports.smsToEmail = function(req, res) {
         "from_email": "smsapp@starkenterprises.com.au",
         "from_name": "SMS App",
         "to": [{
-                "email": "ariane.psom@gmail.com",
-                "name": "Ariane Psomotragos",
+                "email": env.SEND_REPLIES_TO_EMAIL,
+                "name": env.SEND_REPLIES_TO_NAME,
                 "type": "to"
             }],
         "tags": [
