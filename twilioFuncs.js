@@ -59,7 +59,7 @@ module.exports.smsToEmail = function(req, res) {
   // var phone = req.body.From.substring(1,12);
   console.log(req.body);
 
-  var sendgrid = require('sendgrid')('SENDGRID_API_KEY');
+  var sendgrid = require('sendgrid')(env.SENDGRID_API_KEY);
   var email = new sendgrid.Email();
 
   email.addTo('ariane.psom@gmail.com');
