@@ -52,9 +52,6 @@ module.exports.sendMessages = function(toArray, message, callback) {
 
 module.exports.smsToEmail = function(req, res) {
 
-  var mandrill = require('mandrill-api/mandrill');
-  var mandrill_client = new mandrill.Mandrill(env.MANDRILL_API_KEY);
-
   if (req.body.From === undefined || req.body.Body === undefined) {
     return console.error("POST payload malformed");
   }
@@ -62,26 +59,16 @@ module.exports.smsToEmail = function(req, res) {
   // var phone = req.body.From.substring(1,12);
   console.log(req.body);
 
+  var sendgrid = require('sendgrid')('SENDGRID_API_KEY');
+  var email = new sendgrid.Email();
 
-  var message = {
-    'html': '<b>SMS from '+req.body.From+':</b><br>\n'+req.body.Body,
-    'text': 'SMS from '+req.body.From+':\n'+req.body.Body,
-    'subject': 'SMS from '+req.body.From,
-    'from_email': 'smsapp@starkenterprises.com.au',
-    'from_name': 'SMS App',
-    'to': [{
-      'email': 'ariane.psom@gmail.com',
-      'name': 'Ariane Psomotragos',
-      'type': 'to'
-    }],
-    'tags': [
-      'lean-sms'
-    ],
-    'subaccount': 'lean'
-  };
-  mandrill_client.messages.send({'message': message});
+  email.addTo('ariane.psom@gmail.com');
+  email.setFrom('smsapp@starkenterprises.com.au');
+  email.setSubject('SMS from ' + req.body.From);
+  email.setHtml('<b>SMS from ' + req.body.From + ':</b><br>\n' + req.body.Body);
+
+  sendgrid.send(email);
 
   res.type('text/xml');
   res.end('<?xml version="1.0" encoding="UTF-8"?><Response></Response>');
->>>>>>> edit padding and numbers
 };
