@@ -62,13 +62,13 @@ module.exports.smsToEmail = function(req, res) {
   var sendgrid = require('sendgrid')(env.SENDGRID_API_KEY);
   var email = new sendgrid.Email();
 
-  email.addTo('ariane.psom@gmail.com');
+  email.addTo(env.SEND_REPLIES_TO_EMAIL);
   email.setFrom('smsapp@starkenterprises.com.au');
   email.setSubject('SMS from ' + req.body.From);
   email.setHtml('<b>SMS from ' + req.body.From + ':</b><br>\n' + req.body.Body);
 
   sendgrid.send(email);
-
+  console.log(`email sent to ${env.SEND_REPLIES_TO_EMAIL}`);
   res.type('text/xml');
   res.end('<?xml version="1.0" encoding="UTF-8"?><Response></Response>');
 };
